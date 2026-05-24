@@ -26,7 +26,7 @@ class Program
     static string speechApiKey = string.Empty;
     static string speechUrl = string.Empty;
     static SpeechToTextService speechService = null!;
-    
+
     static AssistantService assistant = null!;
     static string sessionId = string.Empty;
     #endregion
@@ -91,7 +91,7 @@ class Program
             messageBot.SendMessageConsole(update.Message.Chat.Id.ToString(), $"Client: {texto}");
         }
         // ÁUDIO/VOZ
-        else if (update.Message.Voice != null) 
+        else if (update.Message.Voice != null)
         {
             try
             {
@@ -110,7 +110,11 @@ class Program
                 }
 
                 // CONVERTE OGG → WAV - PEGA A PASTA RAIZ DA APLICAÇÃO
-                string ffmpegPath = Path.Combine(AppContext.BaseDirectory, "ffmpeg", "bin");
+                string ffmpegPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                     "ffmpeg",
+                     "bin"
+                 );
                 FFmpeg.SetExecutablesPath(ffmpegPath);
 
                 var conversion = await FFmpeg.Conversions.FromSnippet.Convert(oggPath, wavPath);
@@ -125,7 +129,7 @@ class Program
                 {
                     texto = speechResult.Result.Results[0].Alternatives[0].Transcript;
                     messageBot.SendMessageConsole(fileId, $"{MessageBot.AudioReconhecido} {texto}");
-                   
+
                     await botClient.SendMessage(chatId: update.Message.Chat.Id, text: $"{MessageBot.VoceDisse} {texto}", cancellationToken: cancellationToken);
                     messageBot.SendMessageConsole(fileId, $"{MessageBot.VoceDisse} {texto}");
                 }
