@@ -86,10 +86,12 @@ class Program
 
         // TEXTO NORMAL
         if (update.Message!.Text != null)
+        {
             texto = update.Message.Text;
-
-        // ÁUDIO / VOZ
-        else if (update.Message.Voice != null)
+            messageBot.SendMessageConsole(update.Message.Chat.Id.ToString(), $"Client: {texto}");
+        }
+        // ÁUDIO/VOZ
+        else if (update.Message.Voice != null) 
         {
             try
             {
