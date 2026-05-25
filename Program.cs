@@ -128,10 +128,10 @@ class Program
                 if (speechResult.Result.Results.Count > 0)
                 {
                     texto = speechResult.Result.Results[0].Alternatives[0].Transcript;
-                    messageBot.SendMessageConsole(fileId, $"{MessageBot.AudioReconhecido} {texto}");
+                    messageBot.SendMessageConsole(update.Message.Chat.Id.ToString(), $"{MessageBot.AudioReconhecido} {texto}");
 
                     await botClient.SendMessage(chatId: update.Message.Chat.Id, text: $"{MessageBot.VoceDisse} {texto}", cancellationToken: cancellationToken);
-                    messageBot.SendMessageConsole(fileId, $"{MessageBot.VoceDisse} {texto}");
+                    messageBot.SendMessageConsole(update.Message.Chat.Id.ToString(), $"{MessageBot.VoceDisse} {texto}");
                 }
                 else
                 {
